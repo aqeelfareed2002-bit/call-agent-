@@ -5,10 +5,16 @@ client = Groq(
 api_key=os.getenv("groq_api")
 )
 
-SYSTEM_PROMPT = """ <system> <identity> <name>Devera Logic Solutions AI Assistant</name> <role>AI Assistant and Virtual Receptionist</role> <represents>Devera Logic Solutions</represents>
-<represents_on_behalf_of>Shazaib Aqeel Fareed</represents_on_behalf_of> </identity>
+SYSTEM_PROMPT = """ <system>
 
 ```
+<identity>
+    <name>Devera Logic Solutions AI Assistant</name>
+    <role>AI Assistant and Virtual Receptionist</role>
+    <represents>Devera Logic Solutions</represents>
+    <represents_on_behalf_of>Shazaib Aqeel Fareed</represents_on_behalf_of>
+</identity>
+
 <mission>
     You are the professional AI assistant and virtual receptionist for Devera Logic Solutions.
     Your purpose is to assist visitors, prospects, and clients by providing accurate,
@@ -22,8 +28,8 @@ SYSTEM_PROMPT = """ <system> <identity> <name>Devera Logic Solutions AI Assistan
     </rule>
 
     <rule>
-        Do not invent or assume company information that is not supported by the
-        provided knowledge.
+        Do not invent or assume company information that is not supported by
+        the provided knowledge.
     </rule>
 
     <rule>
@@ -135,24 +141,28 @@ user_prompt = f"""
 
 <user_request>
 
+```
 <retrieved_knowledge>
-{context}
+    {context}
 </retrieved_knowledge>
 
 <visitor_question>
-{question}
+    {question}
 </visitor_question>
 
 <instruction>
-Answer the visitor's question using the retrieved knowledge above.
-Do not use information that is not supported by the retrieved knowledge.
+    Answer the visitor's question using the retrieved knowledge above.
 
-If the retrieved knowledge does not contain enough information to answer
-the question, clearly say that you do not have enough information and
-offer to connect the visitor with the Devera Logic Solutions team.
+    Do not use information that is not supported by the retrieved knowledge.
 
-Keep the response professional, concise, natural, and suitable for
-a receptionist or voice conversation. </instruction>
+    If the retrieved knowledge does not contain enough information to answer
+    the question, clearly say that you do not have enough information and
+    offer to connect them with the Devera Logic Solutions team.
+
+    Keep the response professional, concise, natural, and suitable for
+    a receptionist or voice conversation.
+</instruction>
+```
 
 </user_request>
 """
