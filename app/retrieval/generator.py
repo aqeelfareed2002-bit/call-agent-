@@ -126,62 +126,58 @@ SYSTEM_PROMPT = """ <system>
 """
 
 def generate_answer(
-question: str,
-chunks
+    question: str,
+    chunks
 ):
-# Convert retrieved chunks into context
-context = "\n\n".join(
-chunk.content
-for chunk in chunks
-)
+    # Convert retrieved chunks into context
+    context = "\n\n".join(
+        chunk.content
+        for chunk in chunks
+    )
 
-```
-user_prompt = f"""
-```
-
+    user_prompt = f"""
 <user_request>
 
-```
-<retrieved_knowledge>
-    {context}
-</retrieved_knowledge>
+    <retrieved_knowledge>
+        {context}
+    </retrieved_knowledge>
 
-<visitor_question>
-    {question}
-</visitor_question>
+    <visitor_question>
+        {question}
+    </visitor_question>
 
-<instruction>
-    Answer the visitor's question using the retrieved knowledge above.
+    <instruction>
+        Answer the visitor's question using the retrieved knowledge above.
 
-    Do not use information that is not supported by the retrieved knowledge.
+        Do not use information that is not supported by the retrieved knowledge.
 
-    If the retrieved knowledge does not contain enough information to answer
-    the question, clearly say that you do not have enough information and
-    offer to connect them with the Devera Logic Solutions team.
+        If the retrieved knowledge does not contain enough information to answer
+        the question, clearly say that you do not have enough information and
+        offer to connect them with the Devera Logic Solutions team.
 
-    Keep the response professional, concise, natural, and suitable for
-    a receptionist or voice conversation.
-</instruction>
-```
+        Keep the response professional, concise, natural, and suitable for
+        a receptionist or voice conversation.
+    </instruction>
 
 </user_request>
 """
 
-```
-response = client.chat.completions.create(
-    model="openai/gpt-oss-120b",
-    messages=[
-        {
-            "role": "system",
-            "content": SYSTEM_PROMPT
-        },
-        {
-            "role": "user",
-            "content": user_prompt
-        }
-    ],
-    temperature=0
-)
+    response = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT
+            },
+            {
+                "role": "user",
+                "content": user_prompt
+            }
+        ],
+        temperature=0
+    )
+
+    return response.choices[0].message.content
 
 return response.choices[0].message.content
 ```
