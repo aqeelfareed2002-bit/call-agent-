@@ -19,7 +19,9 @@ app = FastAPI(
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
-
+print("CREATING DATABASE TABLES...")
+Base.metadata.create_all(bind=engine)
+print("DATABASE TABLES CREATED")
 
 # Register API router
 app.include_router(documents_router)
