@@ -8,6 +8,7 @@ from app.database import modal
 
 from app.api.documents import router as documents_router
 from app.api.chat import router as chat_router
+from app.api.whatsapp import router as whatsapp_router
 
 
 app = FastAPI(
@@ -26,6 +27,7 @@ print("DATABASE TABLES CREATED")
 # Register API router
 app.include_router(documents_router)
 app.include_router(chat_router)
+app.include_router(whatsapp_router)
 
 
 @app.get("/")
